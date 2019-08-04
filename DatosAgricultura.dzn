@@ -1,0 +1,6 @@
+productos=3;
+mAcres=200;
+mTrabajo=500;
+tabla=[|1,450,6
+       |2,360,7
+       |3,400,5|];
