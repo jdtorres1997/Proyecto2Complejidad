@@ -1,4 +1,4 @@
-%variables
+%Variables
 var int: x1;
 var int: x2;
 var int: x3;
