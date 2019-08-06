@@ -1,14 +1,6 @@
 %variables
-var int: C1;
-var int: C2;
-var int: C3;
-var int: C4;
-var int: C5;
-var int: C6;
-var int: C7;
-var int: C8;
-var int: C9;
-var int: C10;
+var int: CrudoL;
+var int: CrudoP;
 
 %Restricciones
 constraint 100*C1 + 155*C2 + 50*C3 + 112*C4 + 70*C5 + 80*C6 + 60*C7 + 118*C8 + 110*C9 + 55*C10 <= 700;
