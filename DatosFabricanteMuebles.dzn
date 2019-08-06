@@ -1,0 +1,6 @@
+N = 2;
+ML = 45;
+MH = 23;
+Precios = [2, 3];
+Libras = [4, 10];
+Horas = [4, 4];

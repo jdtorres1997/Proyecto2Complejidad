@@ -20,5 +20,3 @@ constraint forall(i in 1..N)(Compras[i]>=0);
 
 %objetivo
 solve minimize sum(i in 1..N)(Compras[i]*Costos[i]);
-
-output ["Bread=", show(Compras[1]), "\nButter=", show(Compras[2]), "\nCheese=", show(Compras[3]), "\nCereal=", show(Compras[4]), "\nDiet Bar=", show(Compras[5])];
