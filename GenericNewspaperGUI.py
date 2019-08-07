@@ -59,7 +59,23 @@ def add_entry_clicked():
     min_pages = min_pages_input.get()
     max_pages = max_pages_input.get()
     potential_readers_per_page = potential_readers_per_page_input.get()
-    #TODO validate input user (corect data types, at least one entry, null values)
+
+    if topic == "":
+        messagebox.showerror("Input error", "Please enter a not null topic")
+        return
+
+    try:
+        num1 = int(min_pages)
+        num2 = int(max_pages)
+        num3 = int(potential_readers_per_page)
+        valid_new_entry = num1 >= 0 and num2 >= 0 and num3 >= 0
+    except ValueError:
+        valid_new_entry = False
+
+    if not valid_new_entry:
+        messagebox.showerror("Input error", "Please enter valid integer number greater than or equal to zero for new entry values")
+        return
+
     naive_key = int(time.time()) + int(random.random()*10000)
     entry_object = {"pk" : naive_key, "topic" : topic, "min_pages" : min_pages, "max_pages" : max_pages, "potential_readers_per_page" : potential_readers_per_page}
     listbox.insert(0, entry_object)
@@ -73,13 +89,27 @@ def create_data_file():
     output_file.write("Mpaginas = %s;\n" % pages_number_input.get())
     table_data = "|"
     for key, entry in entries.items():
-        entry_str = "%s, %s, %s, %s|"%(entry["topic"], entry["min_pages"], entry["max_pages"], entry["potential_readers_per_page"])
+        entry_str = "%s, %s, %s, %s|"%(entry["pk"], entry["min_pages"], entry["max_pages"], entry["potential_readers_per_page"])
         table_data = table_data + entry_str
     output_file.write("tabla=[%s];\n" % table_data)
     output_file.close()
 
 def solve_problem_with_current_entries():
-    #TODO validate input user (corect data types, at least one entry, null values)
+
+    if len(entries) == 0:
+        messagebox.showerror("Input error", "at least 1 entry is required")
+        return
+
+    try:
+        num = int(pages_number_input.get())
+        valid_pages_number = num >= 0
+    except ValueError:
+        valid_pages_number = False
+
+    if not valid_pages_number:
+        messagebox.showerror("Input error", "Please enter valid integer number greater than or equal to zero for pages number")
+        return
+
     create_data_file()
     process = subprocess.Popen("minizinc --solver %s %s %s"%(solver_name, model_filename, data_output_filename), stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
     result_process = process.stdout.read()
