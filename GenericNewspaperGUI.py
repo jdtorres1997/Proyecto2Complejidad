@@ -9,6 +9,9 @@ import json
 import subprocess
 
 entries = {}
+data_output_filename = "PeriodicoDatosTEST.dzn"
+model_filename = "PeriodicoGenerico.mzn"
+solver_name = "Gecode"
 
 window = Tk()
 window.title("Proyect part #2")
@@ -63,11 +66,24 @@ def add_entry_clicked():
     entries[naive_key] = entry_object
     clean_inputs()
 
+def create_data_file():
+    output_file = open(data_output_filename, "w")
+    output_file.write("% Archivo de datos\n")
+    output_file.write("temas = %s;\n" % len(entries))
+    output_file.write("Mpaginas = %s;\n" % pages_number_input.get())
+    table_data = "|"
+    for key, entry in entries.items():
+        entry_str = "%s, %s, %s, %s|"%(entry["topic"], entry["min_pages"], entry["max_pages"], entry["potential_readers_per_page"])
+        table_data = table_data + entry_str
+    output_file.write("tabla=[%s];\n" % table_data)
+    output_file.close()
+
 def solve_problem_with_current_entries():
-    #TODO Create file PeriodicoDatos.dzn from entries dict and
     #TODO validate input user (corect data types, at least one entry, null values)
-    process = subprocess.Popen('minizinc --solver Gecode PeriodicoGenerico.mzn PeriodicoDatos.dzn', stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+    create_data_file()
+    process = subprocess.Popen("minizinc --solver %s %s %s"%(solver_name, model_filename, data_output_filename), stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
     result_process = process.stdout.read()
+    #TODO make a friendly showinfo with result_process
     messagebox.showinfo("Periodic problem solution", result_process)
 
 def delete_entry(entry_str):
