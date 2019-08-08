@@ -9,12 +9,12 @@ import json
 import subprocess
 
 entries = {}
-data_output_filename = "PeriodicoDatosTEST.dzn"
+data_output_filename = "PeriodicoDatos.dzn"
 model_filename = "PeriodicoGenerico.mzn"
 solver_name = "Gecode"
 
 window = Tk()
-window.title("Proyect part #2")
+window.title("Newspaper problem")
 
 # declare labels
 topic_label = Label(window, text="Topic")
