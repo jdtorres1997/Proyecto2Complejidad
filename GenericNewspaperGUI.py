@@ -114,9 +114,10 @@ def solve_problem_with_current_entries():
         return
 
     create_data_file()
-    process = subprocess.Popen("minizinc --solver %s %s %s --output-mode json"%(solver_name, model_filename, data_output_filename), stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+    process = subprocess.Popen("minizinc --solver %s %s %s --output-mode json"%(solver_name, model_filename, data_output_filename), stdout=subprocess.PIPE, stderr=subprocess.STDOUT, shell=True)
     result_process = process.stdout.read()
     result_json_str = result_process[:-24] # remove useless characters
+    print(result_json_str)
     result_dir = json.loads(result_json_str)
     solution_str = ""
     for index, (key, entry) in enumerate(entries.items()):
